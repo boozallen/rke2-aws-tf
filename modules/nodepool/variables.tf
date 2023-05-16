@@ -65,13 +65,14 @@ variable "block_device_mappings" {
 
   default = {
     "size" = 30
-    type   = "gp2"
+    type   = "gp3"
   }
 }
 
 variable "extra_block_device_mappings" {
   type = list(map(string))
   default = [
+    type   = "gp3"
   ]
 }
 

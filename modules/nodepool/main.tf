@@ -29,8 +29,10 @@ resource "aws_launch_template" "this" {
     security_groups             = concat(var.vpc_security_group_ids, [aws_security_group.this.id])
   }
 
+#FIXME: maybe device should be a variable? 
+#    device_name = lookup(var.block_device_mappings, "device_name", "/dev/sda1")
   block_device_mappings {
-    device_name = lookup(var.block_device_mappings, "device_name", "/dev/sda1")
+    device_name = lookup(var.block_device_mappings, "device_name", "/dev/xvda")
     ebs {
       volume_type           = lookup(var.block_device_mappings, "type", null)
       volume_size           = lookup(var.block_device_mappings, "size", null)
