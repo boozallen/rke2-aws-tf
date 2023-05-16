@@ -67,7 +67,7 @@ variable "extra_cloud_config_config" {
   default     = ""
 }
 
-variable "extra_block_device_mappings" {
+variable "extra_storage" {
   description = "Used to specify additional block device mapping configurations"
   type        = list(map(string))
   default = [
