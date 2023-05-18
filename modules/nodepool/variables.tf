@@ -69,7 +69,7 @@ variable "block_device_mappings" {
   }
 }
 
-variable "extra_storage" {
+variable "extra_block_device_mappings" {
   type = list(map(string))
   default = [
   ]

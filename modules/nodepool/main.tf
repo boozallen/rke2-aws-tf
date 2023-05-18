@@ -42,7 +42,7 @@ resource "aws_launch_template" "this" {
   }
 
   dynamic "block_device_mappings" {
-    for_each = var.extra_storage
+    for_each = var.extra_block_device_mappings
     content {
       device_name = lookup(block_device_mappings.value, "device_name", "null")
       ebs {
