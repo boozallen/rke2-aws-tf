@@ -30,7 +30,7 @@ resource "aws_launch_template" "this" {
   }
 
   block_device_mappings {
-    device_name = lookup(var.block_device_mappings, "device_name", "/dev/sda1")
+    device_name = lookup(var.block_device_mappings, "device_name", "/dev/xvda")
     ebs {
       volume_type           = lookup(var.block_device_mappings, "type", null)
       volume_size           = lookup(var.block_device_mappings, "size", null)
