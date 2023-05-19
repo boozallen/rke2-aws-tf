@@ -157,6 +157,12 @@ upload() {
 
   if [ $CCM = "true" ]; then
     if [ $CCM_EXTERNAL = "true" ]; then
+      TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      instance_id=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+      availability_zone=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone
+      env | tee /tmp/.env.cp_config
+      #append_config 'provider-id="provider-id=aws:///$AZ/$IID"'
+
       append_config 'cloud-provider-name: "external"'
       append_config 'disable-cloud-controller: "true"'
     else
