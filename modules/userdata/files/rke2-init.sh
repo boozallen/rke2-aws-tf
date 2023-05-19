@@ -160,11 +160,17 @@ upload() {
       TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
       instance_id=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
       availability_zone=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone
-      env | tee /tmp/.env.cp_config
-      #append_config 'provider-id="provider-id=aws:///$AZ/$IID"'
-
-      append_config 'cloud-provider-name: "external"'
-      append_config 'disable-cloud-controller: "true"'
+      export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      export AZ=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
+      export IID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+      export PROVIDER="provider-id=aws:///$AZ/$IID"
+      mkdir -p /etc/rancher/rke2/config.d/
+      tee /etc/rancher/rke2/config.d/kubelet-config.yaml <<EOF
+      kubelet-arg:
+        - provider-id=aws:///$AZ/$IID
+        - cloud-provider-name: "external"
+        - disable-cloud-controller: "true"
+EOF
     else
       append_config 'cloud-provider-name: "aws"'
     fi
