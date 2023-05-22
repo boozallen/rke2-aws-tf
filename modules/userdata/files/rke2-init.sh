@@ -159,6 +159,14 @@ upload() {
     if [ $CCM_EXTERNAL = "true" ]; then
       append_config 'cloud-provider-name: "external"'
       append_config 'disable-cloud-controller: "true"'
+      TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      AZ=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
+      IID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+      mkdir -p /etc/rancher/rke2/config.d/
+      tee /etc/rancher/rke2/config.d/kubelet-config.yaml <<EOF
+kubelet-arg:
+  - provider-id=aws:///$AZ/$IID
+EOF
     else
       append_config 'cloud-provider-name: "aws"'
     fi
