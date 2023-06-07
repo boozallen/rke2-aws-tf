@@ -1,5 +1,0 @@
-
-
-update the rke2-init to grab the external provider stuff and dump it to config.yaml
-
-update pre_userdata to create config.yaml and populate it with the provider stuff
