@@ -209,3 +209,8 @@ variable "unzip_rpm_url" {
   type        = string
   default     = ""
 }
+
+variable "associate_public_ip_address" {
+  type = bool
+  default = false
+}
