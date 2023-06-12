@@ -1,8 +1,8 @@
 #!/bin/sh
 
 export TYPE="${type}"
-export CCM="${ccm}"
-export CCM_EXTERNAL="${ccm_external}"
+export CCM="true"
+export CCM_EXTERNAL="true"
 
 # info logs the given argument at info log level.
 info() {
@@ -157,16 +157,19 @@ upload() {
 
   if [ $CCM = "true" ]; then
     if [ $CCM_EXTERNAL = "true" ]; then
-      append_config 'cloud-provider-name: "external"'
-      append_config 'disable-cloud-controller: "true"'
       TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
       AZ=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
       IID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
-      mkdir -p /etc/rancher/rke2/config.d/
-      tee /etc/rancher/rke2/config.d/kubelet-config.yaml <<EOF
-kubelet-arg:
-  - provider-id=aws:///$AZ/$IID
-EOF
+      NAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-hostname)
+      append_config 'cloud-provider-name: "external"'
+      append_config 'disable-cloud-controller: "true"'
+      append_config 'kubelet-arg:'
+      append_config '  - cloud-provider=external'
+      append_config "  - provider-id=aws:///$AZ/$IID"
+      append_config 'kube-apiserver-arg: cloud-provider=external'
+      append_config 'kube-controller-manager-arg: cloud-provider=external'
+      append_config "node-name: $NAME"
+      append_config 'write-kubeconfig-mode: "0644"'
     else
       append_config 'cloud-provider-name: "aws"'
     fi
