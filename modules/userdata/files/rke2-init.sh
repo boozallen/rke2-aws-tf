@@ -1,8 +1,8 @@
 #!/bin/sh
 
 export TYPE="${type}"
-export CCM="true"
-export CCM_EXTERNAL="true"
+export CCM="${ccm}"
+export CCM_EXTERNAL="${ccm_external}"
 
 # info logs the given argument at info log level.
 info() {
