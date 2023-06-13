@@ -129,6 +129,7 @@ module "nodepool" {
 
   vpc_id                      = var.vpc_id
   subnets                     = var.subnets
+  target_group_arns           = var.target_group_arns
   ami                         = var.ami
   instance_type               = var.instance_type
   block_device_mappings       = var.block_device_mappings
