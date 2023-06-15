@@ -214,3 +214,8 @@ variable "associate_public_ip_address" {
   type = bool
   default = false
 }
+
+variable "target_group_arns" {
+  type    = list(string)
+  default = []
+}
