@@ -161,7 +161,6 @@ upload() {
       AZ=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone)
       IID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
       NAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/local-hostname)
-      append_config 'cloud-provider-name: "external"'
       append_config 'disable-cloud-controller: "true"'
       append_config 'kubelet-arg:'
       append_config '  - cloud-provider=external'
