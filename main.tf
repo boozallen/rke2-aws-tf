@@ -53,7 +53,7 @@ module "cp_lb" {
   source  = "./modules/nlb"
   name    = local.uname
   vpc_id  = var.vpc_id
-  subnets = var.subnets
+  subnets = var.public_subnets
 
   enable_cross_zone_load_balancing = var.controlplane_enable_cross_zone_load_balancing
   internal                         = var.controlplane_internal
@@ -184,7 +184,7 @@ module "servers" {
   name   = "${local.uname}-server"
 
   vpc_id                      = var.vpc_id
-  subnets                     = var.subnets
+  subnets                     = var.private_subnets
   ami                         = var.ami
   instance_type               = var.instance_type
   block_device_mappings       = var.block_device_mappings

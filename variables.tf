@@ -19,6 +19,16 @@ variable "subnets" {
   type        = list(string)
 }
 
+variable "public_subnets" {
+  description = "List of subnet IDs to create resources in"
+  type        = list(string)
+}
+
+variable "private_subnets" {
+  description = "List of subnet IDs to create resources in"
+  type        = list(string)
+}
+
 variable "tags" {
   description = "Map of tags to add to all resources created"
   default     = {}
