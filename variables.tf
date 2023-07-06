@@ -19,8 +19,8 @@ variable "subnets" {
   type        = list(string)
 }
 
-variable "private_subnets" {
-  description = "List of private subnet IDs to create resources in"
+variable "control_plane_subnets" {
+  description = "List of subnets to place the control plane nodes in"
   type        = list(string)
 }
 
