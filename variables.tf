@@ -20,7 +20,7 @@ variable "subnets" {
 }
 
 variable "private_subnets" {
-  description = "List of subnet IDs to create resources in"
+  description = "List of private subnet IDs to create resources in"
   type        = list(string)
 }
 
