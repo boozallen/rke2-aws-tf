@@ -184,7 +184,7 @@ module "servers" {
   name   = "${local.uname}-server"
 
   vpc_id                      = var.vpc_id
-  subnets                     = var.subnets
+  subnets                     = var.control_plane_subnets
   ami                         = var.ami
   instance_type               = var.instance_type
   block_device_mappings       = var.block_device_mappings
