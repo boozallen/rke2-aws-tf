@@ -77,7 +77,7 @@ data "aws_iam_policy_document" "aws_required" {
 }
 
 # Required IAM Policy for AWS CCM ( external cloud provider )
-data "aws_iam_policy_document" "ccm" {
+data "aws_iam_policy_document" "aws_ccm" {
   count = var.iam_instance_profile == "" && var.ccm_external ? 1 : 0
   statement {
     sid       = ""
