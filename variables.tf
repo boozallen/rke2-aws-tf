@@ -19,6 +19,11 @@ variable "subnets" {
   type        = list(string)
 }
 
+variable "control_plane_subnets" {
+  description = "List of subnets to place the control plane nodes in"
+  type        = list(string)
+}
+
 variable "tags" {
   description = "Map of tags to add to all resources created"
   default     = {}
