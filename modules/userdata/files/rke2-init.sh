@@ -218,6 +218,11 @@ EOF
       systemctl start rke2-agent
     fi
   fi
+  append_config 'kube-apiserver-arg:'
+  append_config '  - anonymous-auth=true'
+  append_config '  - api-audiences=https://k8s.main-kmh.bsf-testing.com,https://kubernetes.default.svc.cluster.local,rke2'
+  append_config '  - service-account-issuer=https://k8s.main-kmh.bsf-testing.com'
+  append_config '  - service-account-jwks-uri=https://k8s.main-kmh.bsf-testing.com/openid/v1/jwks'  
   info "Ending rke2-init userdata"
 
 }
